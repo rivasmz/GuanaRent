@@ -4,6 +4,7 @@
  */
 package Vista;
 
+import Logica.Alquileres;
 import Logica.Mensualidades;
 import java.time.LocalDate;
 import java.util.ArrayList;
