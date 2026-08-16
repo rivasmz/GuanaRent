@@ -239,7 +239,7 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         }
         tblAlquileres.setModel(model);
     }
-}
+
     
     
     
