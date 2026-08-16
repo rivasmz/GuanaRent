@@ -185,7 +185,9 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInquilinosActionPerformed
 
     private void btnAlquileresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlquileresActionPerformed
-         javax.swing.JOptionPane.showMessageDialog(this, "Módulo Alquileres - en construcción");
+          DlgGestionAlquileres win = new DlgGestionAlquileres(this, false,
+            listaAlquileres, listaInquilinos, listaViviendas);
+    win.setVisible(true);
     }//GEN-LAST:event_btnAlquileresActionPerformed
 
     private void btnMensualidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensualidadesActionPerformed
