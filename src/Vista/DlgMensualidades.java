@@ -5,6 +5,7 @@
 package Vista;
 
 import Logica.Alquileres;
+import Logica.Inquilino;
 import Logica.Mensualidades;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -72,8 +73,8 @@ public class DlgMensualidades extends javax.swing.JDialog {
 
     private String buscarNombreInquilino(int ced) {
         for (Inquilino i : listaInquilinos) {
-            if (i.getCedInqui() == ced) {
-                return i.getNomInqui();
+            if (i.getCedula() == ced) {
+                return i.getNombre();
             }
         }
         return "";

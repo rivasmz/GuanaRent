@@ -5,6 +5,7 @@
 package Vista;
 
 import Logica.Alquileres;
+import Logica.Inquilino;
 import Logica.Vivienda;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
@@ -66,9 +67,6 @@ public ArrayList<Alquileres> getListaAlquileres() {
     return listaAlquileres;
 }
     
-     public ArrayList<Alquileres> getListaAlquileres() {
-        return listaAlquileres;
-    }
     
 
     /**
@@ -340,7 +338,7 @@ public ArrayList<Alquileres> getListaAlquileres() {
         Alquileres nuevo = new Alquileres(
             num, dpFechContrato.getDate(), cantMeses, numAdultos, numNinos,
             deposito, precio, porc,
-            inq.getCedInqui(),       // guarda la cédula, no el objeto
+            inq.getCedula(),       // guarda la cédula, no el objeto
             viv.getIdVivienda(),     // guarda el id, no el objeto
             cmbEstado.getSelectedItem().toString()
         );
@@ -359,13 +357,13 @@ public ArrayList<Alquileres> getListaAlquileres() {
     }//GEN-LAST:event_btnGuardar3ActionPerformed
 
     private void cargarCombos() {
-        DefaultComboBoxModel<Inquilino> mi = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel mi = new DefaultComboBoxModel<>();
         for (Inquilino i : listaInquilinos) {
             mi.addElement(i);
         }
         cmbInquilino.setModel(mi);
 
-        DefaultComboBoxModel<Vivienda> mv = new DefaultComboBoxModel<>();
+        DefaultComboBoxModel mv = new DefaultComboBoxModel<>();
         for (Vivienda v : listaViviendas) {
             mv.addElement(v);
         }
@@ -386,7 +384,7 @@ public ArrayList<Alquileres> getListaAlquileres() {
     // Para reseleccionar en el combo al editar (busco el objeto por su llave)
     private Inquilino buscarInquilino(int ced) {
         for (Inquilino i : listaInquilinos) {
-            if (i.getCedInqui() == ced) {
+            if (i.getCedula() == ced) {
                 return i;
             }
         }

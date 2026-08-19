@@ -5,6 +5,7 @@
 package Vista;
 
 import Logica.Alquileres;
+import Logica.Inquilino;
 import Logica.Vivienda;
 import Vista.DlgNewAlquiler;
 import java.util.ArrayList;

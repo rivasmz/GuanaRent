@@ -180,8 +180,8 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnViviendasActionPerformed
 
     private void btnInquilinosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInquilinosActionPerformed
-//        DlgGestionInquilinos win = new DlgGestionInquilinos(this, false, listaInquilinos);
-//        win.setVisible(true);
+        DlgGestionInquilinos win = new DlgGestionInquilinos(this, false, listaInquilinos);
+        win.setVisible(true);
     }//GEN-LAST:event_btnInquilinosActionPerformed
 
     private void btnAlquileresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlquileresActionPerformed
@@ -191,7 +191,9 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAlquileresActionPerformed
 
     private void btnMensualidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensualidadesActionPerformed
-         javax.swing.JOptionPane.showMessageDialog(this, "Módulo Mensualidades - en construcción");
+         DlgMensualidades win = new DlgMensualidades(this, false,
+         listaMensualidades, listaAlquileres, listaInquilinos);
+         win.setVisible(true);
     }//GEN-LAST:event_btnMensualidadesActionPerformed
 
     private void btnGananciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGananciasActionPerformed
