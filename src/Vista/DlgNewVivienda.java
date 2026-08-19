@@ -1,4 +1,7 @@
-
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
+ */
 package Vista;
 
 import Logica.Propietario;
@@ -7,31 +10,31 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JDialog.java to edit this template
- */
 /**
+ * Ventana de registro y edición de viviendas del sistema GuanaRent.
  *
- * @author mario
+ * @author TU_NOMBRE
  */
-
 public class DlgNewVivienda extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DlgNewVivienda
-     */
-    
     private ArrayList<Vivienda> listaViviendas;
     private ArrayList<Propietario> listaPropietarios;
     private int operacion;
     private Vivienda viv;
     private int index;
-    
-    
+
+    /**
+     * Crea la ventana de registro/edición de viviendas.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaViviendas lista de viviendas con la que trabaja
+     * @param listaPropietarios lista de propietarios para elegir el dueño
+     * @param operacion 1 para nuevo, 2 para editar
+     */
     public DlgNewVivienda(java.awt.Frame parent, boolean modal,
-                          ArrayList<Vivienda> listaViviendas,
-                          ArrayList<Propietario> listaPropietarios, int operacion) {
+            ArrayList<Vivienda> listaViviendas,
+            ArrayList<Propietario> listaPropietarios, int operacion) {
         super(parent, modal);
         initComponents();
         this.listaViviendas = listaViviendas;
@@ -41,9 +44,9 @@ public class DlgNewVivienda extends javax.swing.JDialog {
     }
 
     public DlgNewVivienda(java.awt.Frame parent, boolean modal,
-                          ArrayList<Vivienda> listaViviendas,
-                          ArrayList<Propietario> listaPropietarios, int operacion,
-                          Vivienda viv, int index) {
+            ArrayList<Vivienda> listaViviendas,
+            ArrayList<Propietario> listaPropietarios, int operacion,
+            Vivienda viv, int index) {
         super(parent, modal);
         initComponents();
         this.listaViviendas = listaViviendas;
@@ -54,19 +57,18 @@ public class DlgNewVivienda extends javax.swing.JDialog {
         cargarComboPropietarios();
         cargarDatos();
     }
-    
+
     public DlgNewVivienda(java.awt.Frame parent, boolean modal) {
-    super(parent, modal);
-    initComponents();
-    this.listaViviendas = new ArrayList<>();      // evita null
-    this.listaPropietarios = new ArrayList<>();   // si usas este combo
-    this.operacion = 1;
-}
-    
+        super(parent, modal);
+        initComponents();
+        this.listaViviendas = new ArrayList<>();      // evita null
+        this.listaPropietarios = new ArrayList<>();   // si usas este combo
+        this.operacion = 1;
+    }
+
     public ArrayList<Vivienda> getListaViviendas() {
         return listaViviendas;
     }
-
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -275,7 +277,7 @@ public class DlgNewVivienda extends javax.swing.JDialog {
                         .addGap(223, 223, 223))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addGap(276, 276, 276))))
+                        .addGap(271, 271, 271))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -371,6 +373,9 @@ public class DlgNewVivienda extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Valida los campos, crea o actualiza la vivienda y la guarda en la lista.
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         if (txtId.getText().trim().isEmpty() || txtDecripcion.getText().trim().isEmpty()
                 || txtDireccion.getText().trim().isEmpty()
@@ -416,90 +421,98 @@ public class DlgNewVivienda extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-
-
-
-     private void cargarComboPropietarios() {
-    DefaultComboBoxModel<Propietario> modelo = new DefaultComboBoxModel<>();
-    for (Propietario p : listaPropietarios) {
-        modelo.addElement(p);   // mete el OBJETO completo, no solo el nombre
-    }
-    cmbPropietario.setModel(modelo);
-}
-
-    private boolean existeId(int id) {
-    for (Vivienda v : listaViviendas) {
-        if (v.getIdVivienda() == id) {
-            return true;
+    /**
+     * Llena el combo con los propietarios existentes para elegir el dueño.
+     */
+    private void cargarComboPropietarios() {
+        DefaultComboBoxModel<Propietario> modelo = new DefaultComboBoxModel<>();
+        for (Propietario p : listaPropietarios) {
+            modelo.addElement(p);   // mete el OBJETO completo, no solo el nombre
         }
+        cmbPropietario.setModel(modelo);
     }
-    return false;
-}
 
-private void cargarDatos() {
-    txtId.setText(String.valueOf(viv.getIdVivienda()));
-    txtDecripcion.setText(viv.getDescripcion());
-    txtDireccion.setText(viv.getDireccion());
-    txtMtsConstruc.setText(String.valueOf(viv.getMtsConstruc()));
-    txtMtsLote.setText(String.valueOf(viv.getMtsLote()));
-    cmbTipoConstruccion.setSelectedItem(viv.getTipoConstruccion());
-    chkCochera.setSelected(viv.isCochera());
-    txtCantHabitac.setText(String.valueOf(viv.getCantHabitac()));
-    txtCantBanios.setText(String.valueOf(viv.getCantBanios()));
-    cmbCarretera.setSelectedItem(viv.getCarretera());
-    txtPrecioBase.setText(String.valueOf(viv.getPrecioBase()));
-    txtDepositoGarantia.setText(String.valueOf(viv.getDepositoGarantia()));
-    cmbPropietario.setSelectedItem(viv.getPropietario());   // reselecciona el dueño
-    cmbEstado.setSelectedItem(viv.getEstado());
-    txtId.setEnabled(false);
-}
+    /**
+     * Verifica si ya existe una vivienda con ese id (para no duplicar).
+     *
+     * @param id el id a buscar
+     * @return true si el id ya existe, false si no
+     */
+    private boolean existeId(int id) {
+        for (Vivienda v : listaViviendas) {
+            if (v.getIdVivienda() == id) {
+                return true;
+            }
+        }
+        return false;
+    }
 
+    /**
+     * Carga los datos de la vivienda en los campos cuando se va a editar.
+     */
+    private void cargarDatos() {
+        txtId.setText(String.valueOf(viv.getIdVivienda()));
+        txtDecripcion.setText(viv.getDescripcion());
+        txtDireccion.setText(viv.getDireccion());
+        txtMtsConstruc.setText(String.valueOf(viv.getMtsConstruc()));
+        txtMtsLote.setText(String.valueOf(viv.getMtsLote()));
+        cmbTipoConstruccion.setSelectedItem(viv.getTipoConstruccion());
+        chkCochera.setSelected(viv.isCochera());
+        txtCantHabitac.setText(String.valueOf(viv.getCantHabitac()));
+        txtCantBanios.setText(String.valueOf(viv.getCantBanios()));
+        cmbCarretera.setSelectedItem(viv.getCarretera());
+        txtPrecioBase.setText(String.valueOf(viv.getPrecioBase()));
+        txtDepositoGarantia.setText(String.valueOf(viv.getDepositoGarantia()));
+        cmbPropietario.setSelectedItem(viv.getPropietario());   // reselecciona el dueño
+        cmbEstado.setSelectedItem(viv.getEstado());
+        txtId.setEnabled(false);
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
-            }
-        }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-
-    /* Create and display the dialog */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            DlgNewVivienda dialog = new DlgNewVivienda(
-                    new javax.swing.JFrame(), true,
-                    new java.util.ArrayList<>(),
-                    new java.util.ArrayList<>(),
-                    1);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
                 }
-            });
-            dialog.setVisible(true);
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DlgNewVivienda.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    });
-}
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DlgNewVivienda dialog = new DlgNewVivienda(
+                        new javax.swing.JFrame(), true,
+                        new java.util.ArrayList<>(),
+                        new java.util.ArrayList<>(),
+                        1);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGuardar;

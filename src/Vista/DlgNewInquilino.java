@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * Ventana de registro y edición de inquilinos del sistema GuanaRent.
  *
- * @author mario
+ * @author celeste
  */
 public class DlgNewInquilino extends javax.swing.JDialog {
 
@@ -22,6 +23,14 @@ public class DlgNewInquilino extends javax.swing.JDialog {
     private Inquilino inq;
     private int index;
 
+    /**
+     * Crea la ventana de registro/edición de inquilinos.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaInquilinos lista de inquilinos con la que trabaja
+     * @param operacion 1 para nuevo, 2 para editar
+     */
     public DlgNewInquilino(java.awt.Frame parent, boolean modal,
             ArrayList<Inquilino> listaInquilinos, int operacion) {
         super(parent, modal);
@@ -45,6 +54,7 @@ public class DlgNewInquilino extends javax.swing.JDialog {
     public ArrayList<Inquilino> getListaInquilinos() {
         return listaInquilinos;
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -253,6 +263,9 @@ public class DlgNewInquilino extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Valida los campos, crea o actualiza el inquilino y lo guarda en la lista.
+     */
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         if (txtCedula.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty()
@@ -292,6 +305,9 @@ public class DlgNewInquilino extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    /**
+     * Carga los datos del inquilino en los campos cuando se va a editar.
+     */
     private void cargarDatos() {
         txtCedula.setText(String.valueOf(inq.getCedula()));
         txtNombre.setText(inq.getNombre());
@@ -304,6 +320,12 @@ public class DlgNewInquilino extends javax.swing.JDialog {
         txtCedula.setEnabled(false);
     }
 
+    /**
+     * Verifica si ya existe un inquilino con esa cédula (para no duplicar).
+     *
+     * @param ced la cédula a buscar
+     * @return true si la cédula ya existe, false si no
+     */
     private boolean existeCedula(int ced) {
         for (Inquilino i : listaInquilinos) {
             if (i.getCedula() == ced) {

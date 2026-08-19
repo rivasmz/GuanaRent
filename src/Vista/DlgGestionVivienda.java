@@ -11,19 +11,26 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Ventana de gestión de viviendas. Muestra la tabla de viviendas y permite
+ * agregar, editar y eliminar.
  *
  * @author mario
  */
 public class DlgGestionVivienda extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DlgGestionVivienda
-     */
     private ArrayList<Vivienda> listaViviendas;
     private ArrayList<Propietario> listaPropietarios;
     private DefaultTableModel model;
     private java.awt.Frame padre;
 
+    /**
+     * Crea la ventana de gestión de viviendas.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaViviendas lista de viviendas con la que trabaja
+     * @param listaPropietarios lista de propietarios para asignar dueño
+     */
     public DlgGestionVivienda(java.awt.Frame parent, boolean modal,
             ArrayList<Vivienda> listaViviendas,
             ArrayList<Propietario> listaPropietarios) {
@@ -40,6 +47,9 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         initComponents();
     }
 
+    /**
+     * Llena la tabla con todas las viviendas de la lista.
+     */
     private void muestraTabla() {
         String[] titulo = {"ID", "Descripción", "Dirección", "Mts Constr", "Mts Lote",
             "Tipo", "Cochera", "Habitac", "Baños", "Carretera",
@@ -197,6 +207,9 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Abre la ventana para agregar una nueva vivienda y refresca la tabla.
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         if (listaPropietarios.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Primero debe registrar al menos un propietario");
@@ -208,6 +221,9 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         muestraTabla();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    /**
+     * Abre la ventana de edición de la vivienda seleccionada en la tabla.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int index = tblViviendas.getSelectedRow();
         if (index >= 0) {
@@ -221,6 +237,9 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    /**
+     * Elimina la vivienda seleccionada en la tabla, previa confirmación.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int index = tblViviendas.getSelectedRow();
         if (index >= 0) {
@@ -235,10 +254,17 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Evento del cuadro de búsqueda; llama al filtrado.
+     */
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         filtrar();
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    /**
+     * Filtra la tabla mostrando solo las viviendas cuyo id coincide con lo
+     * escrito.
+     */
     private void filtrar() {
         String texto = txtBuscar.getText().toLowerCase();
         String[] titulo = {"ID", "Descripción", "Dirección", "Mts Constr", "Mts Lote",

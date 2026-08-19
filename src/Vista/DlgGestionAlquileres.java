@@ -13,20 +13,28 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Ventana de gestión de alquileres. Muestra la tabla de alquileres y permite
+ * agregar, editar y eliminar.
  *
  * @author mario
  */
 public class DlgGestionAlquileres extends javax.swing.JDialog {
 
-    /**
-     * Creates new form DlgGestionAlquileres
-     */
     private ArrayList<Alquileres> listaAlquileres;
     private ArrayList<Inquilino> listaInquilinos;
     private ArrayList<Vivienda> listaViviendas;
     private DefaultTableModel model;
     private java.awt.Frame padre;
 
+    /**
+     * Crea la ventana de gestión de alquileres.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaAlquileres lista de alquileres con la que trabaja
+     * @param listaInquilinos lista de inquilinos para asociar
+     * @param listaViviendas lista de viviendas para asociar
+     */
     public DlgGestionAlquileres(java.awt.Frame parent, boolean modal,
             ArrayList<Alquileres> listaAlquileres,
             ArrayList<Inquilino> listaInquilinos,
@@ -182,10 +190,17 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Evento del cuadro de búsqueda; llama al filtrado.
+     */
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         filtrar();
     }//GEN-LAST:event_txtBuscarKeyReleased
 
+    /**
+     * Filtra la tabla mostrando solo los alquileres cuyo número coincide con lo
+     * escrito.
+     */
     private void filtrar() {
         String texto = txtBuscar.getText().toLowerCase();
         String[] titulo = {"Núm", "Fecha Contrato", "Meses", "Adultos", "Niños",
@@ -208,6 +223,9 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         tblAlquileres.setModel(model);
     }
 
+    /**
+     * Abre la ventana para registrar un nuevo alquiler y refresca la tabla.
+     */
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         if (listaInquilinos.isEmpty() || listaViviendas.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe haber al menos un inquilino y una vivienda registrados");
@@ -220,6 +238,9 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         muestraTabla();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    /**
+     * Abre la ventana de edición del alquiler seleccionado en la tabla.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int index = tblAlquileres.getSelectedRow();
         if (index >= 0) {
@@ -234,6 +255,9 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    /**
+     * Elimina el alquiler seleccionado en la tabla, previa confirmación.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int index = tblAlquileres.getSelectedRow();
         if (index >= 0) {
@@ -248,6 +272,9 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Llena la tabla con todos los alquileres de la lista.
+     */
     private void muestraTabla() {
         String[] titulo = {"Núm", "Fecha Contrato", "Meses", "Adultos", "Niños",
             "Depósito", "Precio", "% Increm", "Ced Inquilino",

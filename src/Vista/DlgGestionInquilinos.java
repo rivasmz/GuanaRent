@@ -10,30 +10,36 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Ventana de gestión de inquilinos. Muestra la tabla de inquilinos y permite
+ * agregar, editar y eliminar.
  *
- * @author mario
+ * @author celeste
  */
 public class DlgGestionInquilinos extends javax.swing.JDialog {
 
     /**
      * Creates new form DlgGestionInquilinos
      */
-    
     private ArrayList<Inquilino> listaInquilinos;
     private DefaultTableModel model;
     private java.awt.Frame padre;
-    
-    
-     public DlgGestionInquilinos(java.awt.Frame parent, boolean modal,
-                                ArrayList<Inquilino> listaInquilinos) {
+
+    /**
+     * Crea la ventana de gestión de inquilinos.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaInquilinos lista de inquilinos con la que trabaja
+     */
+    public DlgGestionInquilinos(java.awt.Frame parent, boolean modal,
+            ArrayList<Inquilino> listaInquilinos) {
         super(parent, modal);
         initComponents();
         this.padre = parent;
         this.listaInquilinos = listaInquilinos;
         muestraTabla();
     }
-    
-     
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -171,7 +177,10 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-     private void muestraTabla() {
+    /**
+     * Llena la tabla con todos los inquilinos de la lista.
+     */
+    private void muestraTabla() {
         String[] titulo = {"Cedula", "Nombre", "Género", "Fecha Nac",
             "Dirección", "Teléfono", "Email", "Ocupacion"};
         model = new DefaultTableModel(null, titulo);
@@ -190,29 +199,38 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
         }
         tblInquilinos.setModel(model);
     }
-    
+
+    /**
+     * Abre la ventana para agregar un nuevo inquilino y refresca la tabla.
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       DlgNewInquilino winNew = new DlgNewInquilino(padre, true, listaInquilinos, 1);
-       winNew.setVisible(true);
-       this.listaInquilinos = winNew.getListaInquilinos();
-       muestraTabla();
+        DlgNewInquilino winNew = new DlgNewInquilino(padre, true, listaInquilinos, 1);
+        winNew.setVisible(true);
+        this.listaInquilinos = winNew.getListaInquilinos();
+        muestraTabla();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    /**
+     * Abre la ventana de edición del inquilino seleccionado en la tabla.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-       int index = tblInquilinos.getSelectedRow();
-       if (index >= 0) {
-           Inquilino inq = listaInquilinos.get(index);
-           DlgNewInquilino winEdit = new DlgNewInquilino(padre, true,listaInquilinos, 2, inq, index);
-           winEdit.setVisible(true);
+        int index = tblInquilinos.getSelectedRow();
+        if (index >= 0) {
+            Inquilino inq = listaInquilinos.get(index);
+            DlgNewInquilino winEdit = new DlgNewInquilino(padre, true, listaInquilinos, 2, inq, index);
+            winEdit.setVisible(true);
             this.listaInquilinos = winEdit.getListaInquilinos();
             muestraTabla();
-       }else {
-           JOptionPane.showMessageDialog(this, "Debe seleccionar un inquilino");
-       }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un inquilino");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    /**
+     * Elimina el inquilino seleccionado en la tabla, previa confirmación.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       int index = tblInquilinos.getSelectedRow();
+        int index = tblInquilinos.getSelectedRow();
         if (index >= 0) {
             int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el inquilino seleccionado?");
             if (resp == JOptionPane.YES_OPTION) {
@@ -225,48 +243,56 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Evento del cuadro de búsqueda; llama al filtrado.
+     */
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         filtrar();
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    /**
+     * Filtra la tabla mostrando solo los inquilinos cuya cédula coincide con lo
+     * escrito.
+     */
     private void filtrar() {
-    String texto = txtBuscar.getText().toLowerCase();
-    String[] titulo = {"Cedula", "Nombre", "Género", "Fecha Nac",
-                       "Dirección", "Teléfono", "Email", "Ocupación"};
-    DefaultTableModel model = new DefaultTableModel(null, titulo);
-    for (int i = 0; i < listaInquilinos.size(); i++) {
-        Inquilino inq = listaInquilinos.get(i);
-        String clave = String.valueOf(inq.getCedula());   // solo la cédula
-        if (clave.contains(texto)) {
-            Object[] row = {
-                inq.getCedula(), inq.getNombre(), inq.getGenero(),
-                inq.getFechNac(), inq.getDireccion(), inq.getTelefono(),
-                inq.getEmail(), inq.getOcupacion()
-            };
-            model.addRow(row);
+        String texto = txtBuscar.getText().toLowerCase();
+        String[] titulo = {"Cedula", "Nombre", "Género", "Fecha Nac",
+            "Dirección", "Teléfono", "Email", "Ocupación"};
+        DefaultTableModel model = new DefaultTableModel(null, titulo);
+        for (int i = 0; i < listaInquilinos.size(); i++) {
+            Inquilino inq = listaInquilinos.get(i);
+            String clave = String.valueOf(inq.getCedula());   // solo la cédula
+            if (clave.contains(texto)) {
+                Object[] row = {
+                    inq.getCedula(), inq.getNombre(), inq.getGenero(),
+                    inq.getFechNac(), inq.getDireccion(), inq.getTelefono(),
+                    inq.getEmail(), inq.getOcupacion()
+                };
+                model.addRow(row);
+            }
         }
+        tblInquilinos.setModel(model);
     }
-    tblInquilinos.setModel(model);
-}
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-     java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            DlgGestionInquilinos dialog = new DlgGestionInquilinos(
-                    new javax.swing.JFrame(), true,
-                    new java.util.ArrayList<>());
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
-        }
-    });
-}
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DlgGestionInquilinos dialog = new DlgGestionInquilinos(
+                        new javax.swing.JFrame(), true,
+                        new java.util.ArrayList<>());
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;

@@ -10,6 +10,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Ventana de gestión de propietarios. Muestra la tabla de propietarios y
+ * permite agregar, editar y eliminar.
  *
  * @author kevin
  */
@@ -20,7 +22,11 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
     private java.awt.Frame padre;
 
     /**
-     * Creates new form DlgGestionPropietarios
+     * Crea la ventana de gestión de propietarios.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaPropietarios lista de propietarios con la que trabaja
      */
     public DlgGestionPropietarios(java.awt.Frame parent, boolean modal,
             ArrayList<Propietario> listaPropietarios) {
@@ -173,6 +179,9 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Abre la ventana para registrar un nuevo propietario y refresca la tabla.
+     */
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         DlgNewPropietarios winNew = new DlgNewPropietarios(padre, true, listaPropietarios, 1);
         winNew.setVisible(true);
@@ -180,6 +189,9 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
         muestraTabla();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    /**
+     * Abre la ventana de edición del propietario seleccionado en la tabla.
+     */
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         int index = tblPropietarios.getSelectedRow();
         if (index >= 0) {
@@ -193,6 +205,9 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
+    /**
+     * Elimina el propietario seleccionado en la tabla, previa confirmación.
+     */
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int index = tblPropietarios.getSelectedRow();
         if (index >= 0) {
@@ -207,10 +222,17 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    /**
+     * Evento del cuadro de búsqueda; llama al filtrado.
+     */
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         filtrar();
     }//GEN-LAST:event_txtBuscarActionPerformed
 
+    /**
+     * Filtra la tabla mostrando solo los propietarios cuya cédula coincide con
+     * lo escrito.
+     */
     private void filtrar() {
         String texto = txtBuscar.getText().toLowerCase();
         String[] titulo = {"Cédula", "Nombre", "Género", "Dirección", "Teléfono", "Email"};
@@ -229,6 +251,9 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
         tblPropietarios.setModel(model);
     }
 
+    /**
+     * Llena la tabla con todos los propietarios de la lista.
+     */
     private void muestraTabla() {
         String[] titulo = {"Cédula", "Nombre", "Género", "Dirección", "Teléfono", "Email"};
         model = new DefaultTableModel(null, titulo);

@@ -10,8 +10,10 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * Ventana de cálculo de ganancias de GuanaRent. Permite ver las ganancias de
+ * todo un año o de un mes específico.
  *
- * @author kevin
+ * @author celeste
  */
 public class DlgGanancias extends javax.swing.JDialog {
 
@@ -19,7 +21,12 @@ public class DlgGanancias extends javax.swing.JDialog {
     private ArrayList<Alquileres> listaAlquileres;
 
     /**
-     * Creates new form DlgGanancias
+     * Crea la ventana de ganancias.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaMensualidades lista de mensualidades (5% de cada una)
+     * @param listaAlquileres lista de alquileres (mitad del depósito)
      */
     public DlgGanancias(java.awt.Frame parent, boolean modal,
             ArrayList<Mensualidades> listaMensualidades,
@@ -59,18 +66,23 @@ public class DlgGanancias extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        rbMes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         rbMes.setText("Por mes");
 
+        rbAnio.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         rbAnio.setText("Por año");
 
         cmbMes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" }));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setText("Mes");
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel2.setText("Año");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
 
+        btnCalcular.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btnCalcular.setText("Calcular");
         btnCalcular.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -78,7 +90,7 @@ public class DlgGanancias extends javax.swing.JDialog {
             }
         });
 
-        lblResultado.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        lblResultado.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         lblResultado.setText("Total");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -104,12 +116,12 @@ public class DlgGanancias extends javax.swing.JDialog {
                                 .addGap(18, 18, 18)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(81, 81, 81)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnCalcular)
-                                    .addComponent(lblResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addComponent(cmbMes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(85, 85, 85)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnCalcular)
+                            .addComponent(lblResultado, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -125,12 +137,12 @@ public class DlgGanancias extends javax.swing.JDialog {
                     .addComponent(rbAnio)
                     .addComponent(jLabel2)
                     .addComponent(txtAnio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
                 .addComponent(btnCalcular)
-                .addGap(56, 56, 56)
-                .addComponent(lblResultado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(10, 10, 10)
                 .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblResultado)
                 .addGap(52, 52, 52))
         );
 
@@ -147,13 +159,17 @@ public class DlgGanancias extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Calcula y muestra las ganancias por mes o por año, según la opción
+     * elegida.
+     */
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
         // Validar que eligió una opción
         if (!rbAnio.isSelected() && !rbMes.isSelected()) {
@@ -237,7 +253,10 @@ public class DlgGanancias extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DlgGanancias dialog = new DlgGanancias(new javax.swing.JFrame(), true);
+                DlgGanancias dialog = new DlgGanancias(
+                        new javax.swing.JFrame(), true,
+                        new java.util.ArrayList<>(),
+                        new java.util.ArrayList<>());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

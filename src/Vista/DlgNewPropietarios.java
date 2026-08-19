@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
+ * Ventana de registro y edición de propietarios del sistema GuanaRent.
  *
  * @author kevin
  */
@@ -19,20 +20,19 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
     private Propietario prop;
     private int index;
 
-    // 1. Constructor básico
-    public DlgNewPropietarios(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-        this.listaPropietarios = new ArrayList<>(); // ¡Importante para que nunca sea null!
-        this.operacion = 0;
-    }
-
-// 2. Constructor para registrar/operar (Protegido contra nulos)
+    /**
+     * Crea la ventana de registro/edición de propietarios.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaPropietarios lista de propietarios con la que trabaja
+     * @param operacion 1 para nuevo, 2 para editar
+     */
     public DlgNewPropietarios(java.awt.Frame parent, boolean modal,
             ArrayList<Propietario> listaPropietarios, int operacion) {
         super(parent, modal);
         initComponents();
-        // Si te envían una lista nula por error, creamos una nueva para que no reviente
+        // Si envían una lista nula por error, creamos una nueva para que no reviente
         this.listaPropietarios = (listaPropietarios != null) ? listaPropietarios : new ArrayList<>();
         this.operacion = operacion;
     }
@@ -80,23 +80,33 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Propietario");
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de los propietarios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos de los propietarios", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
         lblCedula.setText("Cédula");
+        lblCedula.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         lblNombre.setText("Nombre");
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         lblDireccion.setText("Dirección");
+        lblDireccion.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         lblEmail.setText("Email");
+        lblEmail.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         lblTelefono.setText("Teléfono");
+        lblTelefono.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         lblGenero.setText("Género");
+        lblGenero.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
         cmbGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
 
+        btnAgregar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/nuevoPropi.png"))); // NOI18N
         btnAgregar.setText("Agregar");
+        btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAgregar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnAgregar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
@@ -108,33 +118,38 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAgregar)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(lblGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
-                                        .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING))
-                                    .addGap(33, 33, 33)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(lblEmail, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(19, 19, 19)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(lblDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblGenero, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblNombre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblCedula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtDireccion, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(33, 33, 33)
+                                        .addComponent(lblEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(lblTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtEmail)
                             .addComponent(txtTelefono)
-                            .addComponent(cmbGenero, 0, 174, Short.MAX_VALUE))))
+                            .addComponent(cmbGenero, 0, 174, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(216, 216, 216)
+                        .addComponent(btnAgregar)))
                 .addContainerGap(28, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -161,9 +176,9 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
                         .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lblGenero)
                     .addComponent(cmbGenero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
+                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -173,19 +188,23 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(26, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Valida los campos, crea o actualiza el propietario y lo guarda en la
+     * lista.
+     */
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
 
         if (txtCedula.getText().trim().isEmpty() || txtNombre.getText().trim().isEmpty()
@@ -227,6 +246,9 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
         return listaPropietarios;
     }
 
+    /**
+     * Carga los datos del propietario en los campos cuando se va a editar.
+     */
     private void cargarDatos() {
         txtCedula.setText(String.valueOf(prop.getCedPropiet()));
         txtNombre.setText(prop.getNomPropiet());
@@ -237,6 +259,12 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
         txtCedula.setEnabled(false);   // la cédula no se cambia al editar (es la llave)
     }
 
+    /**
+     * Verifica si ya existe un propietario con esa cédula (para no duplicar).
+     *
+     * @param ced la cédula a buscar
+     * @return true si la cédula ya existe, false si no
+     */
     private boolean existeCedula(int ced) {
         for (Propietario p : listaPropietarios) {
             if (p.getCedPropiet() == ced) {
@@ -290,20 +318,20 @@ public class DlgNewPropietarios extends javax.swing.JDialog {
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            DlgNewPropietarios dialog = new DlgNewPropietarios(
-                    new javax.swing.JFrame(), true,
-                    new java.util.ArrayList<>(),
-                    1);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
-                }
-            });
-            dialog.setVisible(true);
-        }
-    });
+            public void run() {
+                DlgNewPropietarios dialog = new DlgNewPropietarios(
+                        new javax.swing.JFrame(), true,
+                        new java.util.ArrayList<>(),
+                        1);
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

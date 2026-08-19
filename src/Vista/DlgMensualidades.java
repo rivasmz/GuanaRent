@@ -13,6 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
+ * Ventana de generación y consulta de mensualidades. Genera los recibos de los
+ * alquileres vigentes por mes/año aplicando descuentos por temporada.
  *
  * @author kevin
  */
@@ -24,7 +26,14 @@ public class DlgMensualidades extends javax.swing.JDialog {
     private DefaultTableModel model;
 
     /**
-     * Creates new form DlgMensualidades
+     * Crea la ventana de mensualidades.
+     *
+     * @param parent ventana padre
+     * @param modal indica si la ventana es modal
+     * @param listaMensualidades lista donde se guardan los recibos generados
+     * @param listaAlquileres lista de alquileres (para saber cuáles están
+     * vigentes)
+     * @param listaInquilinos lista de inquilinos (para traer el nombre)
      */
     public DlgMensualidades(java.awt.Frame parent, boolean modal,
             ArrayList<Mensualidades> listaMensualidades,
@@ -51,6 +60,12 @@ public class DlgMensualidades extends javax.swing.JDialog {
         muestraTabla();
     }
 
+    /**
+     * Genera el siguiente consecutivo de mensualidad (el mayor existente más
+     * uno).
+     *
+     * @return el número consecutivo para el nuevo recibo
+     */
     private int generarConsecutivo() {
         int max = 0;
         for (Mensualidades m : listaMensualidades) {
@@ -61,6 +76,13 @@ public class DlgMensualidades extends javax.swing.JDialog {
         return max + 1;
     }
 
+    /**
+     * Devuelve el porcentaje de descuento según la temporada del mes. Baja
+     * (ago-oct) 10%, Media (mar-jul) 5%, Alta (nov-feb) 0%.
+     *
+     * @param mes el mes (1 a 12)
+     * @return el descuento en decimal (0.10, 0.05 o 0.0)
+     */
     private double obtenerDescuento(int mes) {
         if (mes == 8 || mes == 9 || mes == 10) {   // Baja: Ago, Set, Oct
             return 0.10;
@@ -71,6 +93,12 @@ public class DlgMensualidades extends javax.swing.JDialog {
         return 0.0;                                 // Alta: Nov, Dic, Ene, Feb
     }
 
+    /**
+     * Busca el nombre del inquilino a partir de su cédula.
+     *
+     * @param ced la cédula del inquilino
+     * @return el nombre del inquilino, o vacío si no se encuentra
+     */
     private String buscarNombreInquilino(int ced) {
         for (Inquilino i : listaInquilinos) {
             if (i.getCedula() == ced) {
@@ -80,6 +108,14 @@ public class DlgMensualidades extends javax.swing.JDialog {
         return "";
     }
 
+    /**
+     * Verifica si un alquiler ya tiene mensualidad generada en ese mes y año.
+     *
+     * @param numAlquiler número del alquiler
+     * @param mes el mes (1 a 12)
+     * @param anio el año
+     * @return true si ya existe, false si no
+     */
     private boolean yaExisteMensualidad(int numAlquiler, int mes, int anio) {
         for (Mensualidades m : listaMensualidades) {
             if (m.getNumAlquiler() == numAlquiler
@@ -116,6 +152,10 @@ public class DlgMensualidades extends javax.swing.JDialog {
         jLabel4 = new javax.swing.JLabel();
         txtAnioMostrar = new javax.swing.JTextField();
         btnGenerarMostrar = new javax.swing.JButton();
+        chkInquilino = new javax.swing.JCheckBox();
+        chkMes = new javax.swing.JCheckBox();
+        chkAnio = new javax.swing.JCheckBox();
+        txtFiltro = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Gestion de Mensualidades");
@@ -243,6 +283,18 @@ public class DlgMensualidades extends javax.swing.JDialog {
                 .addGap(18, 18, 18))
         );
 
+        chkInquilino.setText("Inquilino");
+
+        chkMes.setText("Mes");
+
+        chkAnio.setText("Año");
+
+        txtFiltro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtFiltroKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -256,6 +308,16 @@ public class DlgMensualidades extends javax.swing.JDialog {
                         .addGap(240, 240, 240)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(44, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(chkInquilino)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkMes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(chkAnio)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(67, 67, 67))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,14 +329,24 @@ public class DlgMensualidades extends javax.swing.JDialog {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(44, 44, 44)
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chkInquilino)
+                    .addComponent(chkMes)
+                    .addComponent(chkAnio)
+                    .addComponent(txtFiltro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * Genera un recibo por cada alquiler vigente del mes/año elegido, con su
+     * descuento.
+     */
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
         if (txtAnioGenerar.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe indicar el año");
@@ -330,6 +402,9 @@ public class DlgMensualidades extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnGenerarActionPerformed
 
+    /**
+     * Muestra en la tabla solo las mensualidades del mes y año elegidos.
+     */
     private void btnGenerarMostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarMostrarActionPerformed
         if (txtAnioMostrar.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Debe indicar el año");
@@ -361,6 +436,51 @@ public class DlgMensualidades extends javax.swing.JDialog {
         tblMensualidades.setModel(model);
     }//GEN-LAST:event_btnGenerarMostrarActionPerformed
 
+    private void txtFiltroKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtFiltroKeyReleased
+        String texto = txtFiltro.getText().toLowerCase().trim();
+
+        String[] titulo = {"Consecutivo", "Núm Alquiler", "Fecha Creación", "Inquilino",
+            "Mes", "Año", "Descuento", "Monto a Pagar", "Estado"};
+        model = new DefaultTableModel(null, titulo);
+
+        for (int i = 0; i < listaMensualidades.size(); i++) {
+            Mensualidades m = listaMensualidades.get(i);
+            boolean coincide = true;   // arranca en true y se va filtrando
+
+            // Si marcó Inquilino, el nombre debe contener el texto
+            if (chkInquilino.isSelected()) {
+                if (!m.getNomInquilino().toLowerCase().contains(texto)) {
+                    coincide = false;
+                }
+            }
+            // Si marcó Mes, el mes debe ser igual al texto
+            if (chkMes.isSelected()) {
+                if (!String.valueOf(m.getMesCobro()).equals(texto)) {
+                    coincide = false;
+                }
+            }
+            // Si marcó Año, el año debe ser igual al texto
+            if (chkAnio.isSelected()) {
+                if (!String.valueOf(m.getAnioActual()).equals(texto)) {
+                    coincide = false;
+                }
+            }
+
+            if (coincide) {
+                Object[] row = {
+                    m.getConsecutivo(), m.getNumAlquiler(), m.getFechCreacion(),
+                    m.getNomInquilino(), m.getMesCobro(), m.getAnioActual(),
+                    m.getDescuento(), m.getMontoMes(), m.getEstado()
+                };
+                model.addRow(row);
+            }
+        }
+        tblMensualidades.setModel(model);
+    }//GEN-LAST:event_txtFiltroKeyReleased
+
+    /**
+     * Llena la tabla con todas las mensualidades registradas.
+     */
     private void muestraTabla() {
         String[] titulo = {"Consecutivo", "Núm Alquiler", "Fecha Creación", "Inquilino",
             "Mes", "Año", "Descuento", "Monto a Pagar", "Estado"};
@@ -426,6 +546,9 @@ public class DlgMensualidades extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnGenerarMostrar;
+    private javax.swing.JCheckBox chkAnio;
+    private javax.swing.JCheckBox chkInquilino;
+    private javax.swing.JCheckBox chkMes;
     private javax.swing.JComboBox<String> cmbMesGenerar;
     private javax.swing.JComboBox<String> cmbMesMostrar;
     private javax.swing.JLabel jLabel1;
@@ -440,5 +563,6 @@ public class DlgMensualidades extends javax.swing.JDialog {
     private javax.swing.JTextField txtAnioGenerar;
     private javax.swing.JTextField txtAnioMostrar;
     private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtFiltro;
     // End of variables declaration//GEN-END:variables
 }

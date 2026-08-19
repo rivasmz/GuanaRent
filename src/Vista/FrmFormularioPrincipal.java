@@ -12,6 +12,9 @@ import Logica.Vivienda;
 import java.util.ArrayList;
 
 /**
+ * Ventana principal del sistema GuanaRent. Da acceso a todos los módulos
+ * (propietarios, viviendas, inquilinos, alquileres, mensualidades y ganancias)
+ * y contiene las listas compartidas.
  *
  * @author mario
  */
@@ -20,15 +23,15 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
     /**
      * Creates new form FrmFormularioPrincipal
      */
-    
-    ArrayList<Propietario>   listaPropietarios   = new ArrayList<>();
-    ArrayList<Inquilino>     listaInquilinos     = new ArrayList<>();
-    ArrayList<Vivienda>      listaViviendas      = new ArrayList<>();
-    ArrayList<Alquileres>    listaAlquileres     = new ArrayList<>();
-    ArrayList<Mensualidades> listaMensualidades  = new ArrayList<>();
-    
-    
-    
+    ArrayList<Propietario> listaPropietarios = new ArrayList<>();
+    ArrayList<Inquilino> listaInquilinos = new ArrayList<>();
+    ArrayList<Vivienda> listaViviendas = new ArrayList<>();
+    ArrayList<Alquileres> listaAlquileres = new ArrayList<>();
+    ArrayList<Mensualidades> listaMensualidades = new ArrayList<>();
+
+    /**
+     * Crea la ventana principal e inicializa las listas del sistema.
+     */
     public FrmFormularioPrincipal() {
         initComponents();
     }
@@ -52,8 +55,15 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mnuPropietarios = new javax.swing.JMenuItem();
+        mnuViviendas = new javax.swing.JMenuItem();
+        mnuInquilinos = new javax.swing.JMenuItem();
+        mnuAlquileres = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        mnuMensualidades = new javax.swing.JMenuItem();
+        mnuGanancias = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        mnuSalir = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema Alquileres GuanaRent");
@@ -160,12 +170,71 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
         jLabel1.setPreferredSize(new java.awt.Dimension(800, 400));
 
         jMenu1.setText("Gestion");
+
+        mnuPropietarios.setText("Propietarios");
+        mnuPropietarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuPropietariosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuPropietarios);
+
+        mnuViviendas.setText("Viviendas");
+        mnuViviendas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuViviendasActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuViviendas);
+
+        mnuInquilinos.setText("Inquilinos");
+        mnuInquilinos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuInquilinosActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuInquilinos);
+
+        mnuAlquileres.setText("Alquileres");
+        mnuAlquileres.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuAlquileresActionPerformed(evt);
+            }
+        });
+        jMenu1.add(mnuAlquileres);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Procesos");
+
+        mnuMensualidades.setText("Mensualidades");
+        mnuMensualidades.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuMensualidadesActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuMensualidades);
+
+        mnuGanancias.setText("Ganancias");
+        mnuGanancias.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuGananciasActionPerformed(evt);
+            }
+        });
+        jMenu2.add(mnuGanancias);
+
         jMenuBar1.add(jMenu2);
 
         jMenu3.setText("Sistema");
+
+        mnuSalir.setText("Salir");
+        mnuSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSalirActionPerformed(evt);
+            }
+        });
+        jMenu3.add(mnuSalir);
+
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
@@ -196,12 +265,12 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
 
     private void btnPropietariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPropietariosActionPerformed
         DlgGestionPropietarios win = new DlgGestionPropietarios(this, false, listaPropietarios);
-    win.setVisible(true);
+        win.setVisible(true);
     }//GEN-LAST:event_btnPropietariosActionPerformed
 
     private void btnViviendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnViviendasActionPerformed
         DlgGestionVivienda win = new DlgGestionVivienda(this, false, listaViviendas, listaPropietarios);
-    win.setVisible(true);
+        win.setVisible(true);
     }//GEN-LAST:event_btnViviendasActionPerformed
 
     private void btnInquilinosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInquilinosActionPerformed
@@ -210,20 +279,58 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInquilinosActionPerformed
 
     private void btnAlquileresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlquileresActionPerformed
-          DlgGestionAlquileres win = new DlgGestionAlquileres(this, false,
-            listaAlquileres, listaInquilinos, listaViviendas);
-    win.setVisible(true);
+        DlgGestionAlquileres win = new DlgGestionAlquileres(this, false,
+                listaAlquileres, listaInquilinos, listaViviendas);
+        win.setVisible(true);
     }//GEN-LAST:event_btnAlquileresActionPerformed
 
     private void btnMensualidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMensualidadesActionPerformed
-         DlgMensualidades win = new DlgMensualidades(this, false,
-         listaMensualidades, listaAlquileres, listaInquilinos);
-         win.setVisible(true);
+        DlgMensualidades win = new DlgMensualidades(this, false,
+                listaMensualidades, listaAlquileres, listaInquilinos);
+        win.setVisible(true);
     }//GEN-LAST:event_btnMensualidadesActionPerformed
 
     private void btnGananciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGananciasActionPerformed
-         javax.swing.JOptionPane.showMessageDialog(this, "Módulo Ganancias - en construcción");
+
+        DlgGanancias win = new DlgGanancias(this, false, listaMensualidades, listaAlquileres);
+        win.setVisible(true);
     }//GEN-LAST:event_btnGananciasActionPerformed
+
+    private void mnuPropietariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuPropietariosActionPerformed
+        DlgGestionPropietarios win = new DlgGestionPropietarios(this, false, listaPropietarios);
+        win.setVisible(true);
+    }//GEN-LAST:event_mnuPropietariosActionPerformed
+
+    private void mnuViviendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuViviendasActionPerformed
+        DlgGestionVivienda win = new DlgGestionVivienda(this, false, listaViviendas, listaPropietarios);
+        win.setVisible(true);
+    }//GEN-LAST:event_mnuViviendasActionPerformed
+
+    private void mnuInquilinosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuInquilinosActionPerformed
+        DlgGestionInquilinos win = new DlgGestionInquilinos(this, false, listaInquilinos);
+        win.setVisible(true);
+    }//GEN-LAST:event_mnuInquilinosActionPerformed
+
+    private void mnuAlquileresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuAlquileresActionPerformed
+        DlgGestionAlquileres win = new DlgGestionAlquileres(this, false,
+                listaAlquileres, listaInquilinos, listaViviendas);
+        win.setVisible(true);
+    }//GEN-LAST:event_mnuAlquileresActionPerformed
+
+    private void mnuMensualidadesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuMensualidadesActionPerformed
+        DlgMensualidades win = new DlgMensualidades(this, false,
+                listaMensualidades, listaAlquileres, listaInquilinos);
+        win.setVisible(true);
+    }//GEN-LAST:event_mnuMensualidadesActionPerformed
+
+    private void mnuGananciasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuGananciasActionPerformed
+        DlgGanancias win = new DlgGanancias(this, false, listaMensualidades, listaAlquileres);
+        win.setVisible(true);
+    }//GEN-LAST:event_mnuGananciasActionPerformed
+
+    private void mnuSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_mnuSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -273,5 +380,12 @@ public class FrmFormularioPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JMenuItem mnuAlquileres;
+    private javax.swing.JMenuItem mnuGanancias;
+    private javax.swing.JMenuItem mnuInquilinos;
+    private javax.swing.JMenuItem mnuMensualidades;
+    private javax.swing.JMenuItem mnuPropietarios;
+    private javax.swing.JMenuItem mnuSalir;
+    private javax.swing.JMenuItem mnuViviendas;
     // End of variables declaration//GEN-END:variables
 }
