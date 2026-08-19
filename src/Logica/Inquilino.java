@@ -7,11 +7,12 @@ package Logica;
 import java.time.LocalDate;
 
 /**
+ * Representa a un inquilino que arrienda viviendas en GuanaRent.
  *
  * @author celeste
  */
 public class Inquilino {
-    
+
     private int cedula;
     private String nombre;
     private String genero;
@@ -24,6 +25,14 @@ public class Inquilino {
     public Inquilino() {
     }
 
+    /**
+     * Crea un inquilino con todos sus datos.
+     *
+     * @param cedula cédula (única) @param nombre nombre @param genero género
+     * @param fechNac fecha de nacimiento @param direccion dirección @param
+     * telefono teléfono
+     * @param email correo @param ocupacion ocupación
+     */
     public Inquilino(int cedula, String nombre, String genero, LocalDate fechNac, String direccion, String telefono, String email, String ocupacion) {
         this.cedula = cedula;
         this.nombre = nombre;
@@ -98,12 +107,13 @@ public class Inquilino {
     public void setOcupacion(String ocupacion) {
         this.ocupacion = ocupacion;
     }
-    
+
+    /**
+     * @return cédula y nombre del inquilino (se usa en los combos)
+     */
     @Override
     public String toString() {
         return cedula + " - " + nombre;
     }
-    
-    
-    
+
 }

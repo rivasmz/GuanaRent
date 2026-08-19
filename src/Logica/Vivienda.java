@@ -5,11 +5,12 @@
 package Logica;
 
 /**
+ * Representa una vivienda (usa agregación con Propietario).
  *
  * @author 50660
  */
 public class Vivienda {
-    // --- Atributos ---
+
     private int idVivienda;
     private String descripcion;
     private String direccion;
@@ -22,13 +23,25 @@ public class Vivienda {
     private String carretera;
     private double precioBase;
     private double depositoGarantia;
-    private Propietario propietario;  
-    private String estado; 
-    
-    // --- Constructor vacío ---
+    private Propietario propietario;
+    private String estado;
+
     public Vivienda() {
     }
 
+    /**
+     * Crea una vivienda con todos sus datos.
+     *
+     * @param idVivienda id (único) @param descripcion descripción @param
+     * direccion dirección
+     * @param mtsConstruc mts construcción @param mtsLote mts lote @param
+     * tipoConstruccion tipo
+     * @param cochera si tiene cochera @param cantHabitac habitaciones @param
+     * cantBanios baños
+     * @param carretera carretera @param precioBase precio base @param
+     * depositoGarantia depósito
+     * @param propietario dueño @param estado estado
+     */
     public Vivienda(int idVivienda, String descripcion, String direccion, double mtsConstruc, double mtsLote, String tipoConstruccion, boolean cochera, int cantHabitac, double cantBanios, String carretera, double precioBase, double depositoGarantia, Propietario propietario, String estado) {
         this.idVivienda = idVivienda;
         this.descripcion = descripcion;
@@ -157,8 +170,10 @@ public class Vivienda {
     public void setEstado(String estado) {
         this.estado = estado;
     }
-    
-    // --- toString ---
+
+    /**
+     * @return id y descripción de la vivienda (se usa en los combos)
+     */
     @Override
     public String toString() {
         return idVivienda + " - " + descripcion;

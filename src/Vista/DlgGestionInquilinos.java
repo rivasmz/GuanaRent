@@ -45,7 +45,7 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtBuscarVivienda = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -59,6 +59,12 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Buscar: ");
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(0, 0, 0));
@@ -104,7 +110,7 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBuscarVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -123,7 +129,7 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
                         .addGap(29, 29, 29)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBuscarVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(61, 61, 61))
@@ -219,16 +225,38 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        filtrar();
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void filtrar() {
+    String texto = txtBuscar.getText().toLowerCase();
+    String[] titulo = {"Cedula", "Nombre", "Género", "Fecha Nac",
+                       "Dirección", "Teléfono", "Email", "Ocupación"};
+    DefaultTableModel model = new DefaultTableModel(null, titulo);
+    for (int i = 0; i < listaInquilinos.size(); i++) {
+        Inquilino inq = listaInquilinos.get(i);
+        String clave = String.valueOf(inq.getCedula());   // solo la cédula
+        if (clave.contains(texto)) {
+            Object[] row = {
+                inq.getCedula(), inq.getNombre(), inq.getGenero(),
+                inq.getFechNac(), inq.getDireccion(), inq.getTelefono(),
+                inq.getEmail(), inq.getOcupacion()
+            };
+            model.addRow(row);
+        }
+    }
+    tblInquilinos.setModel(model);
+}
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    java.awt.EventQueue.invokeLater(new Runnable() {
+     java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
             DlgGestionInquilinos dialog = new DlgGestionInquilinos(
-                new javax.swing.JFrame(), true,
-                new java.util.ArrayList<>()   // lista vacía, solo para que abra
-            );
+                    new javax.swing.JFrame(), true,
+                    new java.util.ArrayList<>());
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -248,6 +276,6 @@ public class DlgGestionInquilinos extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblInquilinos;
-    private javax.swing.JTextField txtBuscarVivienda;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

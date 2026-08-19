@@ -72,7 +72,7 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         tblViviendas = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtBuscarVivienda = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -94,6 +94,12 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Buscar: ");
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
 
         btnAgregar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnAgregar.setForeground(new java.awt.Color(0, 0, 0));
@@ -139,7 +145,7 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBuscarVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -155,14 +161,13 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnAgregar)
                     .addComponent(btnEditar)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31))))
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(31, 31, 31))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(54, 54, 54)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscarVivienda, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -230,6 +235,33 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        filtrar();
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void filtrar() {
+        String texto = txtBuscar.getText().toLowerCase();
+        String[] titulo = {"ID", "Descripción", "Dirección", "Mts Constr", "Mts Lote",
+            "Tipo", "Cochera", "Habitac", "Baños", "Carretera",
+            "Precio Base", "Depósito", "Propietario", "Estado"};
+        DefaultTableModel model = new DefaultTableModel(null, titulo);
+        for (int i = 0; i < listaViviendas.size(); i++) {
+            Vivienda v = listaViviendas.get(i);
+            String clave = String.valueOf(v.getIdVivienda());   // solo el ID
+            if (clave.contains(texto)) {
+                Object[] row = {
+                    v.getIdVivienda(), v.getDescripcion(), v.getDireccion(),
+                    v.getMtsConstruc(), v.getMtsLote(), v.getTipoConstruccion(),
+                    v.isCochera() ? "Sí" : "No", v.getCantHabitac(), v.getCantBanios(),
+                    v.getCarretera(), v.getPrecioBase(), v.getDepositoGarantia(),
+                    v.getPropietario().getNomPropiet(), v.getEstado()
+                };
+                model.addRow(row);
+            }
+        }
+        tblViviendas.setModel(model);
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -260,7 +292,10 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DlgGestionVivienda dialog = new DlgGestionVivienda(new javax.swing.JFrame(), true);
+                DlgGestionVivienda dialog = new DlgGestionVivienda(
+                        new javax.swing.JFrame(), true,
+                        new java.util.ArrayList<>(),
+                        new java.util.ArrayList<>());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -280,6 +315,6 @@ public class DlgGestionVivienda extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblViviendas;
-    private javax.swing.JTextField txtBuscarVivienda;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -485,7 +485,11 @@ private void cargarDatos() {
     /* Create and display the dialog */
     java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-            DlgNewVivienda dialog = new DlgNewVivienda(new javax.swing.JFrame(), true);
+            DlgNewVivienda dialog = new DlgNewVivienda(
+                    new javax.swing.JFrame(), true,
+                    new java.util.ArrayList<>(),
+                    new java.util.ArrayList<>(),
+                    1);
             dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                 @Override
                 public void windowClosing(java.awt.event.WindowEvent e) {

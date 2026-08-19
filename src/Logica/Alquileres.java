@@ -7,14 +7,12 @@ package Logica;
 import java.time.LocalDate;
 
 /**
+ * Representa un contrato de alquiler entre inquilino y vivienda.
  *
  * @author mario
  */
 public class Alquileres {
-    
-    
 
-    // --- Atributos ---
     private int numAlquiler;
     private LocalDate fechContrato;
     private int cantMeses;
@@ -23,18 +21,27 @@ public class Alquileres {
     private double depositoGarantia;
     private double precioAlquiler;
     private double porcIncremAnual;
-    private int cedInquilino;   // referencia por cédula (ver nota abajo)
-    private int idVivienda;     // referencia por id (ver nota abajo)
+    private int cedInquilino;
+    private int idVivienda;
     private String estado;
 
-    // --- Constructor vacío ---
     public Alquileres() {
     }
 
-    // --- Constructor con todos los campos ---
+    /**
+     * Crea un alquiler con todos sus datos.
+     *
+     * @param numAlquiler número (único) @param fechContrato fecha @param
+     * cantMeses meses
+     * @param numAdultos adultos @param numNinos niños @param depositoGarantia
+     * depósito
+     * @param precioAlquiler precio @param porcIncremAnual % incremento @param
+     * cedInquilino cédula inquilino
+     * @param idVivienda id vivienda @param estado estado
+     */
     public Alquileres(int numAlquiler, LocalDate fechContrato, int cantMeses, int numAdultos,
-                      int numNinos, double depositoGarantia, double precioAlquiler,
-                      double porcIncremAnual, int cedInquilino, int idVivienda, String estado) {
+            int numNinos, double depositoGarantia, double precioAlquiler,
+            double porcIncremAnual, int cedInquilino, int idVivienda, String estado) {
         this.numAlquiler = numAlquiler;
         this.fechContrato = fechContrato;
         this.cantMeses = cantMeses;
@@ -48,7 +55,6 @@ public class Alquileres {
         this.estado = estado;
     }
 
-    // --- Getters y Setters ---
     public int getNumAlquiler() {
         return numAlquiler;
     }
@@ -137,10 +143,12 @@ public class Alquileres {
         this.estado = estado;
     }
 
-    // --- toString ---
+    /**
+     * @return número del alquiler e id de la vivienda
+     */
     @Override
     public String toString() {
         return "Alquiler #" + numAlquiler + " - Vivienda " + idVivienda;
     }
-    
+
 }

@@ -110,6 +110,12 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
         jLabel1.setForeground(new java.awt.Color(0, 0, 0));
         jLabel1.setText("Buscar:");
 
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -170,7 +176,7 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         DlgNewPropietarios winNew = new DlgNewPropietarios(padre, true, listaPropietarios, 1);
         winNew.setVisible(true);
-         this.listaPropietarios = winNew.getListaPropietarios();
+        this.listaPropietarios = winNew.getListaPropietarios();
         muestraTabla();
     }//GEN-LAST:event_btnNuevoActionPerformed
 
@@ -180,7 +186,7 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
             Propietario prop = listaPropietarios.get(index);
             DlgNewPropietarios winEdit = new DlgNewPropietarios(padre, true, listaPropietarios, 2, prop, index);
             winEdit.setVisible(true);
-             this.listaPropietarios = winEdit.getListaPropietarios();
+            this.listaPropietarios = winEdit.getListaPropietarios();
             muestraTabla();
         } else {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un propietario");
@@ -200,6 +206,28 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Debe seleccionar un propietario");
         }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        filtrar();
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void filtrar() {
+        String texto = txtBuscar.getText().toLowerCase();
+        String[] titulo = {"Cédula", "Nombre", "Género", "Dirección", "Teléfono", "Email"};
+        DefaultTableModel model = new DefaultTableModel(null, titulo);
+        for (int i = 0; i < listaPropietarios.size(); i++) {
+            Propietario p = listaPropietarios.get(i);
+            String clave = String.valueOf(p.getCedPropiet());   // solo la cédula
+            if (clave.contains(texto)) {
+                Object[] row = {
+                    p.getCedPropiet(), p.getNomPropiet(), p.getGenero(),
+                    p.getDireccion(), p.getTelefono(), p.getEmail()
+                };
+                model.addRow(row);
+            }
+        }
+        tblPropietarios.setModel(model);
+    }
 
     private void muestraTabla() {
         String[] titulo = {"Cédula", "Nombre", "Género", "Dirección", "Teléfono", "Email"};
@@ -248,7 +276,9 @@ public class DlgGestionPropietarios extends javax.swing.JDialog {
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DlgGestionPropietarios dialog = new DlgGestionPropietarios(new javax.swing.JFrame(), true);
+                DlgGestionPropietarios dialog = new DlgGestionPropietarios(
+                        new javax.swing.JFrame(), true,
+                        new java.util.ArrayList<>());
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

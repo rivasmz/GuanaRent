@@ -7,12 +7,12 @@ package Logica;
 import java.time.LocalDate;
 
 /**
+ * Representa un recibo de mensualidad de un alquiler.
  *
  * @author kevin
  */
 public class Mensualidades {
 
-    // --- Atributos ---
     private int consecutivo;
     private int numAlquiler;
     private LocalDate fechCreacion;
@@ -23,11 +23,18 @@ public class Mensualidades {
     private double montoMes;
     private String estado;
 
-    // --- Constructor vacío ---
     public Mensualidades() {
     }
 
-    // --- Constructor con todos los campos ---
+    /**
+     * Crea una mensualidad con todos sus datos.
+     *
+     * @param consecutivo número (único) @param numAlquiler número de alquiler
+     * @param fechCreacion fecha
+     * @param nomInquilino inquilino @param mesCobro mes (1-12) @param
+     * anioActual año
+     * @param descuento descuento @param montoMes cuota @param estado estado
+     */
     public Mensualidades(int consecutivo, int numAlquiler, LocalDate fechCreacion,
             String nomInquilino, int mesCobro, int anioActual,
             double descuento, double montoMes, String estado) {
@@ -42,7 +49,6 @@ public class Mensualidades {
         this.estado = estado;
     }
 
-    // --- Getters y Setters ---
     public int getConsecutivo() {
         return consecutivo;
     }
@@ -115,7 +121,9 @@ public class Mensualidades {
         this.estado = estado;
     }
 
-    // --- toString ---
+    /**
+     * @return consecutivo, alquiler y periodo del recibo
+     */
     @Override
     public String toString() {
         return "Recibo #" + consecutivo + " - Alquiler " + numAlquiler

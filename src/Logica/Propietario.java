@@ -5,12 +5,12 @@
 package Logica;
 
 /**
+ * Representa a un propietario (dueño) de viviendas en GuanaRent.
  *
  * @author kevin
  */
 public class Propietario {
 
-    // --- Atributos: privados (encapsulamiento) ---
     private int cedPropiet;
     private String nomPropiet;
     private String genero;
@@ -18,11 +18,16 @@ public class Propietario {
     private String telefono;
     private String email;
 
-    // --- Constructor vacío (útil para crear un objeto e ir llenándolo) ---
     public Propietario() {
     }
 
-    // --- Constructor con todos los campos ---
+    /**
+     * Crea un propietario con todos sus datos.
+     *
+     * @param cedPropiet cédula (única) @param nomPropiet nombre @param genero
+     * género
+     * @param direccion dirección @param telefono teléfono @param email correo
+     */
     public Propietario(int cedPropiet, String nomPropiet, String genero,
             String direccion, String telefono, String email) {
         this.cedPropiet = cedPropiet;
@@ -33,7 +38,6 @@ public class Propietario {
         this.email = email;
     }
 
-    // --- Getters y Setters ---
     public int getCedPropiet() {
         return cedPropiet;
     }
@@ -82,7 +86,9 @@ public class Propietario {
         this.email = email;
     }
 
-    // --- toString: cómo se "verá" el objeto en un JComboBox o al imprimir ---
+    /**
+     * @return cédula y nombre del propietario (se usa en los combos)
+     */
     @Override
     public String toString() {
         return cedPropiet + " - " + nomPropiet;

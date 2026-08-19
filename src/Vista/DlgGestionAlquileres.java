@@ -16,25 +16,21 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author mario
  */
-
 public class DlgGestionAlquileres extends javax.swing.JDialog {
 
     /**
      * Creates new form DlgGestionAlquileres
      */
-    
     private ArrayList<Alquileres> listaAlquileres;
     private ArrayList<Inquilino> listaInquilinos;
     private ArrayList<Vivienda> listaViviendas;
     private DefaultTableModel model;
     private java.awt.Frame padre;
-    
-    
-    
-       public DlgGestionAlquileres(java.awt.Frame parent, boolean modal,
-                                ArrayList<Alquileres> listaAlquileres,
-                                ArrayList<Inquilino> listaInquilinos,
-                                ArrayList<Vivienda> listaViviendas) {
+
+    public DlgGestionAlquileres(java.awt.Frame parent, boolean modal,
+            ArrayList<Alquileres> listaAlquileres,
+            ArrayList<Inquilino> listaInquilinos,
+            ArrayList<Vivienda> listaViviendas) {
         super(parent, modal);
         initComponents();
         this.padre = parent;
@@ -43,16 +39,12 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         this.listaViviendas = listaViviendas;
         muestraTabla();
     }
-    
-    
-    
+
     public DlgGestionAlquileres(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
-    
-  
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +56,7 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        txtBuscarAlquiler = new javax.swing.JTextField();
+        txtBuscar = new javax.swing.JTextField();
         btnNuevo = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
@@ -79,9 +71,9 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
         jLabel2.setText("Buscar: ");
 
-        txtBuscarAlquiler.addKeyListener(new java.awt.event.KeyAdapter() {
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
-                txtBuscarAlquilerKeyReleased(evt);
+                txtBuscarKeyReleased(evt);
             }
         });
 
@@ -129,7 +121,7 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
                 .addGap(15, 15, 15)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtBuscarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -145,7 +137,7 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscarAlquiler, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(46, 46, 46))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -190,9 +182,31 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtBuscarAlquilerKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarAlquilerKeyReleased
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        filtrar();
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
-    }//GEN-LAST:event_txtBuscarAlquilerKeyReleased
+    private void filtrar() {
+        String texto = txtBuscar.getText().toLowerCase();
+        String[] titulo = {"Núm", "Fecha Contrato", "Meses", "Adultos", "Niños",
+            "Depósito", "Precio", "% Increm", "Ced Inquilino",
+            "ID Vivienda", "Estado"};
+        DefaultTableModel model = new DefaultTableModel(null, titulo);
+        for (int i = 0; i < listaAlquileres.size(); i++) {
+            Alquileres a = listaAlquileres.get(i);
+            String clave = String.valueOf(a.getNumAlquiler());   // solo el número
+            if (clave.contains(texto)) {
+                Object[] row = {
+                    a.getNumAlquiler(), a.getFechContrato(), a.getCantMeses(),
+                    a.getNumAdultos(), a.getNumNinos(), a.getDepositoGarantia(),
+                    a.getPrecioAlquiler(), a.getPorcIncremAnual(), a.getCedInquilino(),
+                    a.getIdVivienda(), a.getEstado()
+                };
+                model.addRow(row);
+            }
+        }
+        tblAlquileres.setModel(model);
+    }
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         if (listaInquilinos.isEmpty() || listaViviendas.isEmpty()) {
@@ -222,16 +236,16 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         int index = tblAlquileres.getSelectedRow();
-    if (index >= 0) {
-        int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el alquiler seleccionado?");
-        if (resp == JOptionPane.YES_OPTION) {
-            listaAlquileres.remove(index);
-            JOptionPane.showMessageDialog(this, "Alquiler eliminado");
-            muestraTabla();
+        if (index >= 0) {
+            int resp = JOptionPane.showConfirmDialog(this, "¿Desea borrar el alquiler seleccionado?");
+            if (resp == JOptionPane.YES_OPTION) {
+                listaAlquileres.remove(index);
+                JOptionPane.showMessageDialog(this, "Alquiler eliminado");
+                muestraTabla();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Debe seleccionar un alquiler");
         }
-    } else {
-        JOptionPane.showMessageDialog(this, "Debe seleccionar un alquiler");
-    }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void muestraTabla() {
@@ -252,51 +266,51 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
         tblAlquileres.setModel(model);
     }
 
-    
-    
-    
-    
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-    /* Set the Nimbus look and feel */
-    //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-    /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-     */
-    try {
-        for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-            if ("Nimbus".equals(info.getName())) {
-                javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                break;
-            }
-        }
-    } catch (ClassNotFoundException ex) {
-        java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (InstantiationException ex) {
-        java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (IllegalAccessException ex) {
-        java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-        java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-    }
-    //</editor-fold>
-
-    /* Create and display the dialog */
-    java.awt.EventQueue.invokeLater(new Runnable() {
-        public void run() {
-            DlgGestionAlquileres dialog = new DlgGestionAlquileres(new javax.swing.JFrame(), true);
-            dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                @Override
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    System.exit(0);
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
                 }
-            });
-            dialog.setVisible(true);
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(DlgGestionAlquileres.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-    });
-}
+        //</editor-fold>
+
+        /* Create and display the dialog */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                DlgGestionAlquileres dialog = new DlgGestionAlquileres(
+                        new javax.swing.JFrame(), true,
+                        new java.util.ArrayList<>(),
+                        new java.util.ArrayList<>(),
+                        new java.util.ArrayList<>());
+                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
+                    @Override
+                    public void windowClosing(java.awt.event.WindowEvent e) {
+                        System.exit(0);
+                    }
+                });
+                dialog.setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -306,6 +320,6 @@ public class DlgGestionAlquileres extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblAlquileres;
-    private javax.swing.JTextField txtBuscarAlquiler;
+    private javax.swing.JTextField txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
